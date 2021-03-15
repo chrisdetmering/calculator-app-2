@@ -1,97 +1,122 @@
-const orderlist= document.querySelector(".input-buttons");
-const equals = document.querySelector(".equals");
-const clearButton = document.querySelector(".clear");
-const input=document.querySelector(".cal-display");
-let mathSymbol= "";
+const input = document.querySelector(".cal-display");
+let mathSymbol = "";
 let firstNumber = null;
-let secondNumber= null;
-orderlist.addEventListener("click", (e)=>{
-    let clickedBox=e.target;
-    if(firstNumber==null){
-    if(clickedBox.className=="number"& mathSymbol==""){
-        input.textContent+=clickedBox.textContent;
-        return
-    }
-    if( clickedBox.className=="symbol"&& input!==""){
-        mathSymbol=clickedBox.textContent;
-        firstNumber=parseFloat(input.textContent);
-        return
-  }  }
-    if(secondNumber==null){
-        switch(clickedBox.className){
-     case "symbol":
-        mathSymbol=clickedBox.textContent;
-     break
-     case"number":
-       input.textContent=clickedBox.textContent;
-       secondNumber=parseFloat(clickedBox.textContent);
-       break
-     }
-    }
-    else if( secondNumber!==null){
-        switch(clickedBox.className){
-        case "number":
-            input.textContent+=clickedBox.textContent;
-            secondNumber=parseFloat(input.textContent);
-            break
-        case "symbol":
+let secondNumber = null;
 
-            switch (mathSymbol){
-            case "+":
-               input.textContent=firstNumber+secondNumber;
-               firstNumber=firstNumber+secondNumber;       
-               secondNumber=null;        
-                break
-            case "-":
-                input.textContent=firstNumber-secondNumber;
-               firstNumber=firstNumber-secondNumber;       
-               secondNumber=null;   
-               break
-               case "X":
-               input.textContent=firstNumber*secondNumber;
-               firstNumber=firstNumber*secondNumber;       
-               secondNumber=null;        
-                break
-            case "÷":
-                input.textContent=firstNumber/secondNumber;
-               firstNumber=firstNumber/secondNumber;       
-               secondNumber=null;   
-               break
-        }
+
+document.querySelectorAll('.number').forEach(numberButton => { 
+    numberButton.addEventListener("click", () => { 
+        const number = parseFloat(numberButton.textContent); 
         
-        mathSymbol= clickedBox.textContent ;}
-    }
-})
-equals.addEventListener("click", ()=>{
-    if(secondNumber!==null&& mathSymbol!=="" ){  
-        debugger
-        switch (mathSymbol){
-            case "+":
-               input.textContent=firstNumber+secondNumber;
-               firstNumber=firstNumber+secondNumber;       
-               secondNumber=null;        
-                break
-            case "-":
-                input.textContent=firstNumber-secondNumber;
-               firstNumber=firstNumber-secondNumber;       
-               secondNumber=null;   
-               break
-               case "X":
-               input.textContent=firstNumber*secondNumber;
-               firstNumber=firstNumber*secondNumber;       
-               secondNumber=null;        
-                break
-            case "÷":
-                input.textContent=firstNumber/secondNumber;
-               firstNumber=firstNumber/secondNumber;       
-               secondNumber=null;   
-               break
+        if (firstNumber === null) { 
+            setFirstNumber(number); 
+            return;
         }
-    }
+
+        if (secondNumber === null) { 
+            setSecondNumber(number); 
+        }
+
+    });
 })
-clearButton.addEventListener('click', ()=>{
-    firstNumber=null;
-    secondNumber=null;
-    mathSymbol="";
-    input.textContent=""
-    })
+
+
+
+
+document.querySelector(".input-buttons")
+.addEventListener("click", (e)=>{
+    let clickedBox = e.target;
+    if (firstNumber === null){
+        setFirstNumber(clickedBox); 
+        return;  
+    }
+
+    if (clickedBox.className === "symbol") { 
+        mathSymbol = clickedBox.textContent;
+        return; 
+    }
+
+    if (secondNumber === null) {
+        setSecondNumber(clickedBox);
+        return; 
+    }
+
+    if (secondNumber !== null) {
+        const buttonType = clickedBox.className; 
+        if (buttonType === "number") { 
+            input.textContent += clickedBox.textContent;
+            secondNumber = parseFloat(input.textContent);
+            return; 
+        }
+
+        if (buttonType === "symbol") { 
+            const answer = calculate(); 
+            const firstNumber = answer; 
+            input.textContent = firstNumber; 
+            secondNumber = null;
+            mathSymbol = buttonType.textContent; 
+        } 
+        
+    }
+}); 
+
+
+document.querySelector(".equals")
+.addEventListener("click", () => {
+    if (secondNumber !== null && mathSymbol !== "" ){  
+        const answer = calculate(); 
+        input.textContent = answer; 
+        firstNumber = answer; 
+        secondNumber = null; 
+        mathSymbol = ''; 
+    }
+});
+
+
+function setFirstNumber(number) { 
+    firstNumber = number; 
+    input.textContent += number;
+}
+
+function setSecondNumber(button) { 
+    
+}
+
+
+
+function calculate() { 
+    switch (mathSymbol){
+        case "+":
+            return add(firstNumber, secondNumber);     
+        case "-":
+            return subtract(firstNumber, secondNumber); 
+        case "X":
+            return multiply(firstNumber, secondNumber);
+        case "÷":
+            return divide(firstNumber, secondNumber); 
+    }
+}
+
+function add(num1, num2) { 
+    return num1 + num2; 
+}
+
+function subtract(num1, num2) { 
+    return num1 - num2; 
+}
+
+function multiply(num1, num2) { 
+    return num1 * num2; 
+}
+
+function divide(num1, num2) { 
+    return num1 / num2; 
+}
+
+document.querySelector(".clear")
+.addEventListener('click', ()=>{
+    firstNumber = null;
+    secondNumber = null;
+    mathSymbol = "";
+    input.textContent = "";
+});
