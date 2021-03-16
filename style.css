@@ -1,46 +1,56 @@
-*{
+* {
     box-sizing: border-box;
     list-style-type:none;
     margin: 0;
     padding: 0;
 }
-.calc-body{  
+.calc-body {  
     min-width: 20%;
     max-width: 45%;
     margin: auto;
     margin-top: 60px;
     border:10px solid black;
 }
-.clear{
+.clear {
 float: left;
 height: 24px;
 width: 30px;
 }
-.clear:active{
+
+.clear:active {
 background-color: grey;
 }
-.cal-display{    
+
+.cal-display {    
     text-align: right;
     border:2px solid grey;
     min-height: 25px;
 }
 
-.input-buttons{
+.input-buttons {
     display: flex;
     flex-wrap: wrap;
 }
-li{
+
+li {
     border: 1px white solid;
     text-align: center;
     min-width: 25%;
     background-color: teal;
 }
-li:hover{
-    color:white;}
-li:active{
+li:hover {
+    color:white;
+}
+
+li:active {
     background-color: grey;
     border: 1px solid black;
 }
-.symbol{
+
+.operator {
+    background-color: wheat;
+}
+
+.equals { 
     background-color: wheat;
 }
