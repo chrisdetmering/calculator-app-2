@@ -3,6 +3,10 @@ let operation = null;
 let firstNumber = null;
 let secondNumber = null;
 
+
+//Homework: Continuous operations 
+
+
 document.querySelectorAll('.number').forEach(numberButton => { 
     numberButton.addEventListener("click", () => { 
         if (display.textContent.length >= 10) return; 
@@ -107,3 +111,4 @@ document.querySelector(".clear")
     operation = null;
     display.textContent = "";
 });
+
